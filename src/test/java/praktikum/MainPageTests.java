@@ -1,6 +1,7 @@
 package praktikum;
 
 import handlers.Parameters;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import org.hamcrest.MatcherAssert;
@@ -44,16 +45,28 @@ public class MainPageTests {
         driver.quit();
     }
     @Test
-    @DisplayName("Проверка работы вкладок для разделов с ингредиентами")
-    public void checkConstructorNavIsSuccess() {
+    @Step("Нажатие на вкладку Булки")
+    @DisplayName("Проверка работы вкладки Булки в разделе с ингредиентами")
+    public void checkNavBunsIsSuccess() {
+        Allure.parameter("Браузер", browserName);
         int expectedLocation = mainPage.getIngredientTitleExpectedLocation();
 
-        checkToppingsTab(expectedLocation);
-        checkFillingsTab(expectedLocation);
-        checkBunsTab(expectedLocation);
+        mainPage.clickToppingsButton();
+        mainPage.clickBunsButton();
+
+        MatcherAssert.assertThat(
+                "Ингредиенты не проскроллились до булок",
+                mainPage.getBunsLocation(),
+                equalTo(expectedLocation)
+        );
     }
-    @Step("Нажатие на Соусы")
-    private void checkToppingsTab(int expectedLocation) {
+    @Test
+    @Step("Нажатие на вкладку Соусы")
+    @DisplayName("Проверка работы вкладки Соусы в разделе с ингредиентами")
+    public void checkNavToppingsIsSuccess() {
+        Allure.parameter("Браузер", browserName);
+        int expectedLocation = mainPage.getIngredientTitleExpectedLocation();
+
         mainPage.clickToppingsButton();
 
         MatcherAssert.assertThat(
@@ -62,23 +75,18 @@ public class MainPageTests {
                 equalTo(expectedLocation)
         );
     }
-    @Step("Нажатие на Начинки")
-    private void checkFillingsTab(int expectedLocation) {
+    @Test
+    @Step("Нажатие на вкладку Начинки")
+    @DisplayName("Проверка работы вкладки Соусы в разделе с ингредиентами")
+    public void checkNavFillingsIsSuccess() {
+        Allure.parameter("Браузер", browserName);
+        int expectedLocation = mainPage.getIngredientTitleExpectedLocation();
+
         mainPage.clickFillingsButton();
 
         MatcherAssert.assertThat(
-                "Ингредиенты не проскроллились до начинок",
+                "Ингредиенты не проскроллились до соусов",
                 mainPage.getFillingsLocation(),
-                equalTo(expectedLocation)
-        );
-    }
-    @Step("Нажатие на Начинки")
-    private void checkBunsTab(int expectedLocation) {
-        mainPage.clickBunsButton();
-
-        MatcherAssert.assertThat(
-                "Ингредиенты не проскроллились до начинок",
-                mainPage.getBunsLocation(),
                 equalTo(expectedLocation)
         );
     }
