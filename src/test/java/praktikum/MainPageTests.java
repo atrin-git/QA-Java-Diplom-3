@@ -77,7 +77,7 @@ public class MainPageTests {
     }
     @Test
     @Step("Нажатие на вкладку Начинки")
-    @DisplayName("Проверка работы вкладки Соусы в разделе с ингредиентами")
+    @DisplayName("Проверка работы вкладки Начинки в разделе с ингредиентами")
     public void checkNavFillingsIsSuccess() {
         Allure.parameter("Браузер", browserName);
         int expectedLocation = mainPage.getIngredientTitleExpectedLocation();
